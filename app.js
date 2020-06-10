@@ -10,6 +10,54 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
+function run() {
+    
+}
+
+// uses role argument to genereate the questions for each type of employee
+function generateQuestions(employeeType) {
+    const questions = [
+        {
+            type: "input",
+            name: "name",
+            message: "Enter the employee's name: "
+        },
+        {
+            type: "input",
+            name: "id",
+            message: "Enter the employee's id number: "
+        },
+        {
+            type: "input",
+            name: "email",
+            message: "Enter the employee's email address: "
+        }
+    ]
+    if (employeeType === "Engineer") {
+        questions.push({
+            type: "input",
+            name: "github",
+            message: "Enter the engineer's GitHub account name: "
+        });
+    }
+    else if (employeeType === "Intern") {
+        questions.push({
+            type: "input",
+            name: "school",
+            message: "Enter the intern's school: "
+        });
+    }
+    else if (employeeType === "Manager") {
+        questions.push({
+            type: "input",
+            name: "officeNumber",
+            message: "Enter the manager's office number: "
+        });
+    }
+
+    return questions;
+}
+
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
