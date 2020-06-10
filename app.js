@@ -14,6 +14,25 @@ function run() {
     
 }
 
+// takes data from inquirer and creates a new object using our employee subclasses
+function generateEmployee(employeeType, data) {
+    let newEmployee;
+    
+    switch (employeeType) {
+        case "Engineer":
+            newEmployee = new Engineer(data.name, data.id, data.email, data.github);
+            break;
+        case "Intern":
+            newEmployee = new Intern(data.name, data.id, data.email, data.school);
+            break;
+        case "Manager":
+            newEmployee = new Manager(data.name, data.id, data.email, data.officeNumber);
+            break;
+    }
+
+    return newEmployee;
+}
+
 // uses role argument to genereate the questions for each type of employee
 function generateQuestions(employeeType) {
     const questions = [
@@ -33,26 +52,28 @@ function generateQuestions(employeeType) {
             message: "Enter the employee's email address: "
         }
     ]
-    if (employeeType === "Engineer") {
-        questions.push({
-            type: "input",
-            name: "github",
-            message: "Enter the engineer's GitHub account name: "
-        });
-    }
-    else if (employeeType === "Intern") {
-        questions.push({
-            type: "input",
-            name: "school",
-            message: "Enter the intern's school: "
-        });
-    }
-    else if (employeeType === "Manager") {
-        questions.push({
-            type: "input",
-            name: "officeNumber",
-            message: "Enter the manager's office number: "
-        });
+
+    switch (employeeType) {
+        case "Engineer":
+            questions.push({
+                type: "input",
+                name: "github",
+                message: "Enter the engineer's GitHub account name: "
+            });
+            break;
+        case "Intern":
+            questions.push({
+                type: "input",
+                name: "school",
+                message: "Enter the intern's school: "
+            });
+            break;
+        case "Manager":
+            questions.push({
+                type: "input",
+                name: "officeNumber",
+                message: "Enter the manager's office number: "
+            });
     }
 
     return questions;
