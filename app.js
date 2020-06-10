@@ -10,9 +10,35 @@ const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
 
-function run() {
-    
+run();
+
+async function run() {
+    let cont = true;
+    const employees = [];
+
+    while (cont === true) {
+        const employeeType = await inquirer.prompt({
+            type: "list",
+            name: "employeeType",
+            message: "What type of employee would you like to add?",
+            choices: ["Engineer", "Intern", "Manager"]
+        })
+        const newEmployee = generateEmployee(employeeType.employeeType, await inquirer.prompt(generateQuestions(employeeType.employeeType)));
+        employees.push(newEmployee);
+
+        const userCont = await inquirer.prompt({
+            type: "confirm",
+            name: "cont",
+            message: "Would you like to add another employee?"
+        })
+        cont = userCont.cont;
+    }
+
+    console.log(employees);
 }
+
+
+
 
 // takes data from inquirer and creates a new object using our employee subclasses
 function generateEmployee(employeeType, data) {
