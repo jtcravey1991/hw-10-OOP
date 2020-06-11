@@ -38,6 +38,7 @@ async function run() {
 
     const HTML = render(employees);
 
+    //checks if filepath exists, and creates it if it doesnt
     if (!fs.existsSync(OUTPUT_DIR)) {
         fs.mkdirSync(OUTPUT_DIR);
     }
