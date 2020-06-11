@@ -12,10 +12,12 @@ const render = require("./lib/htmlRenderer");
 
 run();
 
+// main function
 async function run() {
     let cont = true;
     const employees = [];
 
+    //while loop which gathers employees until the user is finished
     while (cont === true) {
         const employeeType = await inquirer.prompt({
             type: "list",
@@ -34,11 +36,19 @@ async function run() {
         cont = userCont.cont;
     }
 
-    console.log(employees);
+    const HTML = render(employees);
+
+    if (!fs.existsSync(OUTPUT_DIR)) {
+        fs.mkdirSync(OUTPUT_DIR);
+    }
+
+    fs.writeFile(outputPath, HTML, err => {
+        if (err) {
+            throw err;
+        }
+        console.log("File Created!")
+    });
 }
-
-
-
 
 // takes data from inquirer and creates a new object using our employee subclasses
 function generateEmployee(employeeType, data) {
